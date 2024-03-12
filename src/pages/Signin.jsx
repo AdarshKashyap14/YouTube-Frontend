@@ -1,4 +1,4 @@
-import { Alert, Button } from "flowbite-react";
+import { Alert, Button, TextInput } from "flowbite-react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -53,22 +53,23 @@ export default function Signin() {
           </div>
         ) : (
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-            <input
+            <TextInput
+              
               type="text"
               placeholder="UserName"
               id="username"
-              className="w-80 p-2 border rounded-md"
+              
               onChange={(e) => {
                 setUsername(e.target.value);
                 console.log(username);
               }}
             />
 
-            <input
+            <TextInput
               type="password"
               placeholder="Password"
               id="password"
-              className="w-80 p-2 border rounded-md"
+              className="w-80  rounded-md"
               onChange={(e) => {
                 console.log(password);
                 setPassword(e.target.value);

@@ -45,5 +45,5 @@ const userSlice = createSlice({
 });
 
 export const { signInStart, signInSuccess, signInFailure , signoutSuccess , updateFailure, updateStart , updateSuccess } = userSlice.actions;
-// The value of `reducer` is
+
 export default userSlice.reducer;

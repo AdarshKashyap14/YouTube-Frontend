@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Navbar, TextInput, Button, Dropdown, Avatar } from "flowbite-react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon, FaSun } from "react-icons/fa";
@@ -8,15 +8,29 @@ import { signoutSuccess } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { RiVideoAddFill } from "react-icons/ri";
+import { useState } from "react";
 
 import { toggleTheme } from "../redux/theme/themeSlice";
+
 
 export default function Header() {
   const location = useLocation();
   const path = location.pathname;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { currentuser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
+  const [searchQuery, setSearchQuery] = useState("");
+  
+
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    if (searchQuery.trim() !== '') {
+      navigate(`/search/${encodeURIComponent(searchQuery)}`);
+    }
+
+  };
 
   const handleSignout = async () => {
     try {
@@ -32,6 +46,10 @@ export default function Header() {
     }
   };
 
+
+
+ 
+
   return (
     <Navbar className="border-b-2">
       <Link
@@ -42,13 +60,20 @@ export default function Header() {
           Youtube
         </span>
       </Link>
-      <form>
+      <form onSubmit={handleSearch}>
         <TextInput
           type="text"
           placeholder="Search..."
           rightIcon={AiOutlineSearch}
           className="hidden lg:inline"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
+
+        {/* <SearchPage searchQuery={searchQuery} /> */}
+        
+        
+      
       </form>
       <Button className="w-12 h-10 lg:hidden" color="gray" pill outline>
         <AiOutlineSearch />
@@ -74,6 +99,7 @@ export default function Header() {
                 size="sm"
                 className="cursor-pointer"
                 rounded
+                bordered
               />
             }
           >
@@ -106,11 +132,12 @@ export default function Header() {
               active={path === "/create-video"}
               as={"div"}
             >
-             < RiVideoAddFill />
+              <RiVideoAddFill />
             </Link>
           </Navbar.Link>
         )}
       </Navbar.Collapse>
+    
     </Navbar>
   );
 }

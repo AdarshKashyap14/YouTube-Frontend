@@ -8,10 +8,12 @@ export default function CreateVideo() {
   const [description, setDescription] = useState("");
   const [videoFile, setVideoFile] = useState(null);
   const [thumbnailFile, setThumbnailFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
@@ -31,6 +33,9 @@ export default function CreateVideo() {
       }
     } catch (error) {
       console.log(error.message);
+    }
+    finally {
+      setIsLoading(false); // Set loading state to false after request completes
     }
   };
 
@@ -106,14 +111,26 @@ export default function CreateVideo() {
         </div>
 
         <div className="flex justify-center my-1">
-          <Button
-            type="submit"
-            gradientDuoTone="purpleToPink"
-            outline
-            className="w-full"
-          >
-            Upload
-          </Button>
+        {isLoading ? (
+            <Button
+              type="button"
+              gradientDuoTone="purpleToPink"
+              outline
+              className="w-full"
+              disabled
+            >
+              Uploading...
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              gradientDuoTone="purpleToPink"
+              outline
+              className="w-full"
+            >
+              Upload
+            </Button>
+          )}
         </div>
       </form>
     </div>

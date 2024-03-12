@@ -56,15 +56,17 @@ export default function DashProfile() {
   };
 
   return (
-    <div
-      className="max-w-lg mx-auto p-3 w-full flex flex-col"
-    
-    >
-      <h1 className="my-7 text-center font-semibold text-3xl"   style={{
-        backgroundImage: `url(${currentuser.data.user.coverImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}>Profile</h1>
+    <div className="max-w-lg mx-auto p-3 w-full flex flex-col">
+      <h1
+        className="my-7 text-center font-semibold text-3xl"
+        style={{
+          backgroundImage: `url(${currentuser.data.user.coverImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        Profile
+      </h1>
       <form className="flex flex-col gap-4">
         <input
           type="file"

@@ -1,12 +1,12 @@
 import { Sidebar } from 'flowbite-react';
 import {
-  HiViewGrid,
   HiArrowSmRight,
-  HiDocumentText,
   HiOutlineUserGroup,
-  HiAnnotation,
   HiChartPie,
 } from 'react-icons/hi';
+import { MdSubscriptions } from "react-icons/md";
+import { BiSolidUserCircle } from "react-icons/bi";
+import { IoVideocam } from "react-icons/io5";
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { signoutSuccess } from '../redux/user/userSlice';
@@ -43,7 +43,7 @@ export default function DashSidebar() {
     <Sidebar className='w-full md:w-56'>
       <Sidebar.Items>
         <Sidebar.ItemGroup className='flex flex-col gap-1'>
-          {currentuser && currentuser.isAdmin && (
+          {currentuser  && (
             <Link to='/dashboard?tab=dash'>
               <Sidebar.Item
                 active={tab === 'dash' || !tab}
@@ -57,7 +57,7 @@ export default function DashSidebar() {
           <Link to='/dashboard?tab=profile'>
             <Sidebar.Item
               active={tab === 'profile'}
-              icon={HiViewGrid}
+              icon={ BiSolidUserCircle}
               label={currentuser.isAdmin ? 'Admin' : 'User'}
               labelColor='dark'
               as='div'
@@ -65,35 +65,35 @@ export default function DashSidebar() {
               Profile
             </Sidebar.Item>
           </Link>
-          {currentuser.isAdmin && (
-            <Link to='/dashboard?tab=posts'>
+          {currentuser && (
+            <Link to='/dashboard?tab=videos'>
               <Sidebar.Item
-                active={tab === 'posts'}
-                icon={HiDocumentText}
+                active={tab === 'videos'}
+                icon={IoVideocam}
                 as='div'
               >
-                Posts
+                Videos
               </Sidebar.Item>
             </Link>
           )}
-          {currentuser.isAdmin && (
+          {currentuser && (
             <>
-              <Link to='/dashboard?tab=users'>
+              <Link to='/dashboard?tab=subscribers'>
                 <Sidebar.Item
-                  active={tab === 'users'}
+                  active={tab === 'subscribers'}
                   icon={HiOutlineUserGroup}
                   as='div'
                 >
-                  Users
+                 Subscribers
                 </Sidebar.Item>
               </Link>
               <Link to='/dashboard?tab=comments'>
                 <Sidebar.Item
                   active={tab === 'comments'}
-                  icon={HiAnnotation}
+                  icon={MdSubscriptions}
                   as='div'
                 >
-                  Comments
+                  Subscribed
                 </Sidebar.Item>
               </Link>
             </>

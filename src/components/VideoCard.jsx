@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
 
 function VideoCard({ video }) {
 
@@ -39,6 +41,7 @@ VideoCard.propTypes = {
 };
 
   return (
+    <Link to={`/video/${video._id}`}>
     <div className="p-4 rounded-lg  relative overflow-hidden">
       <video
         className="w-full h-auto"
@@ -73,6 +76,7 @@ VideoCard.propTypes = {
        
       </div>
     </div>
+    </Link>
   );
 }
 
