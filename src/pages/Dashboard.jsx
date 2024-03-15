@@ -5,6 +5,7 @@ import DashProfile from "../components/DashProfile";
 import DashVideos from "../components/DashVideos";
 import DashUser from "../components/DashUser";
 import DashSubs from "../components/DashSubs";
+import DashSubscribed from "../components/DashSubscribed";
 
 export default function Dashboard() {
   const location = useLocation();
@@ -26,6 +27,7 @@ export default function Dashboard() {
       {tab === "videos" && <DashVideos />}
       {tab === "dash" && <DashUser />}
       {tab === "subscribers" && <DashSubs />}
+      {tab === "subscribed" && <DashSubscribed />}
     </div>
   );
 }

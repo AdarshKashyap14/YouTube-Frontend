@@ -4,6 +4,7 @@ import axios from 'axios';
 
 export default function Home() {
   const [videos, setVideos] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchVideos() {
@@ -11,7 +12,8 @@ export default function Home() {
         const response = await axios.get('/api/v1/videos/allvideos');
         if (response.data && response.data.success) {
           setVideos(response.data.data);
-          console.log(response.data.data);
+          setIsLoading(false);
+        
         } else {
           console.error('Error fetching videos:', response.data.message);
         }
@@ -25,11 +27,19 @@ export default function Home() {
 
   return (
     <div className="container mx-auto">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {videos.map((video) => (
-          <VideoCard key={video._id} video={video} />
-        ))}
-      </div>
+      {isLoading ? (
+        <div className="text-center mt-8">Loading...</div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {videos.length === 0 ? (
+            <div className="text-center mt-8">No videos found.</div>
+          ) : (
+            videos.map((video) => (
+              <VideoCard key={video._id} video={video} />
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 }

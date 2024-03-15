@@ -1,4 +1,4 @@
-import { Alert, Avatar, Button } from "flowbite-react";
+import { Alert, Avatar, Button, TextInput } from "flowbite-react";
 import { useState } from "react";
 import axios from "axios";
 // import { navigate } from "react-router-dom";
@@ -71,11 +71,10 @@ export default function Signup() {
             <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500"></div>
           </div>
         ) : (
-          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+          <form className="flex flex-col gap-4 md:w-3/4 lg:w-1/4 mx-auto" onSubmit={handleSubmit}>
             <div className="flex flex-col items-center gap-2">
               <Avatar
-                img="/images/people/profile-picture-5.jpg"
-                alt="avatar of Jese"
+        
                 rounded
                 bordered
               />
@@ -83,9 +82,8 @@ export default function Signup() {
                 htmlFor="profile"
                 className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white p-2 rounded-md cursor-pointer"
               >
-                Upload Profile
-              </label>
-              <input
+                Upload Profile Photo
+                <TextInput
                 type="file"
                 id="avatar"
                 onChange={(e) => {
@@ -93,6 +91,8 @@ export default function Signup() {
                   console.log(avatar);
                 }}
               />
+              </label>
+             
             </div>
 
             <div className="flex flex-col items-center gap-2">
@@ -101,8 +101,7 @@ export default function Signup() {
                 className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white p-2 rounded-md cursor-pointer"
               >
                 Cover Photo
-              </label>
-              <input
+                <TextInput
                 type="file"
                 id="coverImage"
                 onChange={(e) => {
@@ -110,45 +109,47 @@ export default function Signup() {
                   console.log(coverImage);
                 }}
               />
+              </label>
+              
             </div>
 
-            <input
+            <TextInput
               type="text"
               placeholder="Full Name"
               id="fullname"
-              className="w-80 p-2 border rounded-md"
+            
               onChange={(e) => {
                 setFullName(e.target.value);
                 console.log(fullName);
               }}
             />
-            <input
+            <TextInput
               type="text"
               placeholder="UserName"
               id="username"
-              className="w-80 p-2 border rounded-md"
+             
               onChange={(e) => {
                 setUsername(e.target.value);
                 console.log(username);
               }}
             />
-            <input
+            <TextInput
               type="email"
               placeholder="Email"
             
               id="email"
-              className="w-80 p-2 border rounded-md"
+             
               onChange={(e) => {
                 setEmail(e.target.value);
                 console.log(email);
               }}
             />
-            <input
+            <TextInput
               type="password"
               placeholder="Password"
             
               id="password"
-              className="w-80 p-2 border rounded-md"
+             
               onChange={(e) => {
                 setPassword(e.target.value);
                 console.log(password);

@@ -87,9 +87,9 @@ export default function DashSidebar() {
                  Subscribers
                 </Sidebar.Item>
               </Link>
-              <Link to='/dashboard?tab=comments'>
+              <Link to='/dashboard?tab=subscribed'>
                 <Sidebar.Item
-                  active={tab === 'comments'}
+                  active={tab === 'subscribed'}
                   icon={MdSubscriptions}
                   as='div'
                 >

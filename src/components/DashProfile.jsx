@@ -12,6 +12,9 @@ export default function DashProfile() {
   const { currentuser } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
+  const [fullname, setFullname] = useState('');
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const filePickerRef = useRef();
   const dispatch = useDispatch();
@@ -24,16 +27,43 @@ export default function DashProfile() {
       setImageFileUrl(URL.createObjectURL(file));
     }
   };
+  
+  const handleUpdate = async (e) => {
+    e.preventDefault(); 
+    dispatch(updateStart());
+    setLoading(true);
+
+    try {
+      const res = await axios.patch(
+        "/api/v1/users//update-user-account",
+        { fullname, email } // Send updated fullname and email
+      );
+
+      if (res.status === 200) {
+        dispatch(updateSuccess(res.data));
+        console.log(res.data);
+      } else {
+        dispatch(updateFailure(res.message));
+      }
+    } catch (error) {
+      dispatch(updateFailure(error.message));
+      console.log(error.message);
+    } finally {
+      setLoading(false); // Set loading state back to false
+    }
+  };
 
   useEffect(() => {
     if (imageFile) {
       console.log("uploading image");
       uploadImage();
     }
+    
   }, [imageFile]);
 
   const uploadImage = async () => {
     dispatch(updateStart());
+    setLoading(true);
     const formData = new FormData();
     formData.append("avatar", imageFile);
 
@@ -52,6 +82,8 @@ export default function DashProfile() {
     } catch (error) {
       dispatch(updateFailure(error.message));
       console.log(error.message);
+    }finally {
+      setLoading(false); // Set loading state back to false
     }
   };
 
@@ -67,7 +99,7 @@ export default function DashProfile() {
       >
         Profile
       </h1>
-      <form className="flex flex-col gap-4">
+      <form className="flex flex-col gap-4" onSubmit={handleUpdate}>
         <input
           type="file"
           id="avatar"
@@ -83,6 +115,7 @@ export default function DashProfile() {
             src={imageFileUrl || currentuser.data.user.avatar}
             alt="avatarImg"
             className="rounded-full w-full h-full object-cover border-8 border-{lightgray}"
+            disabled={loading} 
           />
         </div>
         <TextInput
@@ -90,23 +123,25 @@ export default function DashProfile() {
           id="username"
           placeholder="username"
           defaultValue={currentuser.data.user.username}
+          disabled
         />
         <TextInput
           type="email"
           id="email"
           placeholder="email"
           defaultValue={currentuser.data.user.email}
-          //   onChange={handleChange}
+          onChange={(e) => setEmail(e.target.value)} 
+          
         />
         <TextInput
           type="text"
           id="fullname"
           placeholder="fullname"
           defaultValue={currentuser.data.user.fullname}
-          //   onChange={handleChange}
+          onChange={(e) => setFullname(e.target.value)}
         />
-        <Button type="submit" gradientDuoTone="purpleToBlue" outline>
-          Update
+       <Button type="submit" gradientDuoTone="purpleToBlue" outline disabled={loading}>
+          {loading ? 'Updating...' : 'Update'}
         </Button>
       </form>
     </div>

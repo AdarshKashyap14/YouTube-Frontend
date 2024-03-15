@@ -3,7 +3,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { Avatar, List } from 'flowbite-react';
 
-export default function DashSubs() {
+export default function  DashSubscribed() {
   const { currentuser } = useSelector((state) => state.user);
   const [subscribedChannels, setSubscribedChannels] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -14,11 +14,11 @@ export default function DashSubs() {
         setIsLoading(true);
         // Fetch subscribed channels from the server
         const response = await axios.get(
-          `/api/v1/subscriptions/u/${currentuser.data.user._id}`
+          `/api/v1/subscriptions/c/${currentuser.data.user._id}`
         );
         if (response.status === 200) {
-          console.log(response.data.data.subscribers);
-          setSubscribedChannels(response.data.data.subscribers);
+          console.log("s",response.data);
+          setSubscribedChannels(response.data.data);
         }
       } catch (error) {
         console.error("Error fetching subscribed channels:", error);
@@ -28,17 +28,17 @@ export default function DashSubs() {
     };
 
     fetchSubscribedChannels();
-  }, []); // Empty dependency array ensures the effect runs only once
+  }, []); 
 
   return (
     <div className="max-w-xl mx-auto p-3 w-full">
-    <h1 className="text-2xl font-bold mb-4">Subscribers List</h1>
+    <h1 className="text-2xl font-bold mb-4">Channels Subscribed</h1>
     {isLoading ? (
       <div>Loading...</div>
     ) : (
       <div>
         {subscribedChannels.length === 0 ? (
-          <div>No one Subscribed you yet keep uploading videos.</div>
+          <div>Go and Subscribe  to some Channels!</div>
         ) : (
           <ul>
             {subscribedChannels.map((channel) => (
@@ -52,6 +52,7 @@ export default function DashSubs() {
               </List>
             ))}
           </ul>
+     
         )}
       </div>
     )}

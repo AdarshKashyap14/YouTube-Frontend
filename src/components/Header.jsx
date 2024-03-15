@@ -2,13 +2,12 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Navbar, TextInput, Button, Dropdown, Avatar } from "flowbite-react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon, FaSun } from "react-icons/fa";
-// import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { signoutSuccess } from "../redux/user/userSlice";
+import { signInSuccess, signoutSuccess } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { RiVideoAddFill } from "react-icons/ri";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { toggleTheme } from "../redux/theme/themeSlice";
 
@@ -46,6 +45,25 @@ export default function Header() {
     }
   };
 
+  useEffect(() => {
+    const refreshToken = async () => {
+      try {
+        const response = await axios.post("/api/v1/users/refresh-token");
+        console.log(response);
+        if (response.status === 200) {
+          dispatch(signInSuccess(response.data));
+        }
+      } catch (error) {
+       
+        if (error.response.status === 400) {
+          dispatch(signoutSuccess());
+         
+        }
+        console.log(error.message);
+      }
+    };
+    refreshToken();
+  }, []);
 
 
  
@@ -57,7 +75,7 @@ export default function Header() {
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
       >
         <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
-          Youtube
+          YouTube
         </span>
       </Link>
       <form onSubmit={handleSearch}>
@@ -69,11 +87,7 @@ export default function Header() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-
-        {/* <SearchPage searchQuery={searchQuery} /> */}
-        
-        
-      
+ 
       </form>
       <Button className="w-12 h-10 lg:hidden" color="gray" pill outline>
         <AiOutlineSearch />
@@ -105,7 +119,7 @@ export default function Header() {
           >
             <Dropdown.Header>
               <span className="block text-sm">
-                {currentuser.data.user.username}
+                {currentuser.data.user.fullname}
               </span>
             </Dropdown.Header>
             <Link to={"/dashboard?tab=profile"}>
@@ -116,7 +130,7 @@ export default function Header() {
           </Dropdown>
         ) : (
           <Link to="/sign-in">
-            <Button color="gray" pill outline>
+            <Button gradientDuoTone="purpleToPink" pill outline>
               Signin
             </Button>
           </Link>

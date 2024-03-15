@@ -1,5 +1,5 @@
 import { BiLike } from "react-icons/bi";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button, TextInput } from "flowbite-react";
 import { useSelector } from "react-redux";
@@ -7,7 +7,7 @@ import axios from "axios";
 
 function VideoPage() {
   const {currentuser} = useSelector((state) => state.user);
-  console.log(currentuser.data);
+  const {navigate} = useNavigate();
   const { videoId } = useParams();
   const [video, setVideo] = useState(null);
   const [ownerDetails, setOwnerDetails] = useState(null);
@@ -16,6 +16,7 @@ function VideoPage() {
   const [subscribed, setSubscribed] = useState(false);
   const [comments, setComments] = useState([]);
   const [commentContent, setCommentContent] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleToggleLike = async () => {
     try {
@@ -56,10 +57,7 @@ function VideoPage() {
       if (responseSubscription.status === 200) {
         // Toggle the subscription state
         setSubscribed((prevSubscribed) => !prevSubscribed);
-        console.log(
-          "Subscription toggled successfully",
-          responseSubscription.data
-        );
+        
       } else {
         console.error("Toggle subscription failed");
       }
@@ -70,17 +68,20 @@ function VideoPage() {
 
   // Function to handle adding comment
   const handleAddComment = async () => {
+    setLoading(true);
     try {
       const response = await axios.post(`/api/v1/comments/${videoId}`, {
         content: commentContent,
       });
 
       if (response.status === 201) {
-        console.log("Comment added successfully:", response.data);
+    
         setCommentContent(""); // Clear the comment content input field
       }
     } catch (error) {
       console.error("Error adding comment:", error.message);
+    } finally{
+      setLoading(false);
     }
   };
 
@@ -103,7 +104,7 @@ function VideoPage() {
             } else {
               setSubscribed(false);
             }
-            console.log("Owner details:", ownerResponse.data.data);
+          
           } else {
             console.error(
               "Error fetching owner details:",
@@ -114,7 +115,7 @@ function VideoPage() {
           // Fetch video likes
           const likesResponse = await axios.get(`/api/v1/likes/${videoId}`);
           await likesResponse.json;
-          console.log(likesResponse.data.data.isLikedByUser);
+          
           if (likesResponse.data && likesResponse.data.success) {
             setLikes(likesResponse.data.data.likes);
 
@@ -123,7 +124,7 @@ function VideoPage() {
             } else {
               setLiked(false);
             }
-            console.log("LikesBy:", likesResponse.data.data.isLikedByUser);
+          
           } else {
             console.error(
               "Error fetching video likes:",
@@ -159,6 +160,10 @@ function VideoPage() {
     return <div>Loading...</div>;
   }
 
+  if(!currentuser){
+    return navigate("/sign-in")
+  }
+
   return (
     <div className="container mx-auto px-12 py-8">
       <div className="relative">
@@ -186,14 +191,14 @@ function VideoPage() {
         </div>
         <Button
           size="xs"
-          color={subscribed ? "success" : "dark"} // Change color based on subscription status
+          color={subscribed ? "success" : "dark"} 
           pill
           onClick={handleToggleSubscription}
         >
           {subscribed ? "Subscribed" : "Subscribe"}
         </Button>
 
-        {/* Add here the like button  and number of likes */}
+    
         <Button size="xs" color={liked ? "success" : "dark"} pill onClick={handleToggleLike}>
           <BiLike
            
@@ -217,13 +222,16 @@ function VideoPage() {
             onChange={(e) => setCommentContent(e.target.value)}
             type="text"
             placeholder="Add a comment..."
+            required
             className="w-full  p-2"
+            disabled = {loading}
           />
           <Button
             size="xs"
             outline
             gradientDuoTone="tealToLime"
             onClick={handleAddComment}
+            disabled = {loading}
           >
             Add Comment
           </Button>
@@ -234,7 +242,7 @@ function VideoPage() {
           {comments.length === 0 ? (
             <p>No comments yet.</p>
           ) : (
-            // Render comments
+           
             comments.map((comment) => (
               <div key={comment._id} className="flex items-center gap-4 mt-4">
                 {/* Comment author avatar */}
@@ -243,7 +251,7 @@ function VideoPage() {
                   alt=""
                   className="rounded-full h-12 w-12"
                 />
-                {/* Comment text */}
+                
                 <div className="flex flex-col">
                   <span className="font-medium">{comment.owner.username}</span>
                   <span className="text-sm">{comment.content}</span>
