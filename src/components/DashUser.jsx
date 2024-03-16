@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function DashUser() {
   const { currentuser } = useSelector((state) => state.user);
   const [userDetails, setUserDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -26,6 +29,9 @@ export default function DashUser() {
 
     if (currentuser && currentuser.data && currentuser.data.user) {
       fetchUserDetails();
+    }
+    else{
+     navigate("/sign-in");
     }
   }, [currentuser]);
 

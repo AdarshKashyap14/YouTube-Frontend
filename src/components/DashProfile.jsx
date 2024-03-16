@@ -88,7 +88,7 @@ export default function DashProfile() {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-3 w-full flex flex-col">
+    <div className="max-w-xl mx-auto p-3 w-full flex flex-col">
       <h1
         className="my-7 text-center font-semibold text-3xl"
         style={{

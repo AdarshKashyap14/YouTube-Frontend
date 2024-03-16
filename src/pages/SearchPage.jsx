@@ -46,7 +46,7 @@ function SearchPage() {
             params: { query: searchQuery },
           });
         setSearchResults(response.data.data);
-        console.log("search result ",response.data.data);
+        
         setIsLoading(false);
       } catch (error) {
         console.error('Error fetching search results:', error.message);

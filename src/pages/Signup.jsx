@@ -2,6 +2,7 @@ import { Alert, Avatar, Button, TextInput } from "flowbite-react";
 import { useState } from "react";
 import axios from "axios";
 // import { navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [username, setUsername] = useState("");
@@ -10,7 +11,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
-
+  const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -19,11 +20,11 @@ export default function Signup() {
     setError(null);
     setLoading(true);
     if (
-      !username ||
-      !email ||
-      !fullName ||
-      !password ||
-      !avatar ||
+      !username &&
+      !email &&
+      !fullName &&
+      !password &&
+      !avatar &&
       !coverImage
     ) {
       setError("Please fill all the fields");
@@ -35,7 +36,7 @@ export default function Signup() {
       formDataToSend.append("username", username);
       formDataToSend.append("email", email);
       formDataToSend.append("password", password);
-      formDataToSend.append("fullName", fullName);
+      formDataToSend.append("fullname", fullName);
       formDataToSend.append("avatar", avatar);
       formDataToSend.append("coverImage", coverImage);
 
@@ -43,18 +44,18 @@ export default function Signup() {
         "/api/v1/users/register",
         formDataToSend
       );
+        console.log(response);
+    
 
-      const data = await response.json;
-
-      if (!response.ok) {
+      if (!response.status !== 201) {
         setError(response.message);
         return;
       }
-      if (response.ok) {
+      else {
         setLoading(false);
-        // navigate("/signin");
+        navigate("/sign-in");
       }
-      console.log(data);
+      
     } catch (err) {
       setError(err.message);
     }

@@ -3,14 +3,13 @@ import { Navbar, TextInput, Button, Dropdown, Avatar } from "flowbite-react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import { signInSuccess, signoutSuccess } from "../redux/user/userSlice";
+import { signoutSuccess } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { RiVideoAddFill } from "react-icons/ri";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { toggleTheme } from "../redux/theme/themeSlice";
-
 
 export default function Header() {
   const location = useLocation();
@@ -20,15 +19,13 @@ export default function Header() {
   const { currentuser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
   const [searchQuery, setSearchQuery] = useState("");
-  
-
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    if (searchQuery.trim() !== '') {
+    if (searchQuery.trim() !== "") {
       navigate(`/search/${encodeURIComponent(searchQuery)}`);
+      setSearchQuery("");
     }
-
   };
 
   const handleSignout = async () => {
@@ -44,29 +41,6 @@ export default function Header() {
       console.log(error.message);
     }
   };
-
-  useEffect(() => {
-    const refreshToken = async () => {
-      try {
-        const response = await axios.post("/api/v1/users/refresh-token");
-        console.log(response);
-        if (response.status === 200) {
-          dispatch(signInSuccess(response.data));
-        }
-      } catch (error) {
-       
-        if (error.response.status === 400) {
-          dispatch(signoutSuccess());
-         
-        }
-        console.log(error.message);
-      }
-    };
-    refreshToken();
-  }, []);
-
-
- 
 
   return (
     <Navbar className="border-b-2">
@@ -87,7 +61,6 @@ export default function Header() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
- 
       </form>
       <Button className="w-12 h-10 lg:hidden" color="gray" pill outline>
         <AiOutlineSearch />
@@ -98,7 +71,6 @@ export default function Header() {
           color="gray"
           pill
           onClick={() => dispatch(toggleTheme())}
-          outline
         >
           {theme === "light" ? <FaMoon /> : <FaSun />}
         </Button>
@@ -151,7 +123,6 @@ export default function Header() {
           </Navbar.Link>
         )}
       </Navbar.Collapse>
-    
     </Navbar>
   );
 }
