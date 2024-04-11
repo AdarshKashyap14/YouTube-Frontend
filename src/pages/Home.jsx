@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import VideoCard from '../components/VideoCard';
 import axios from 'axios';
+import { BASE_URL } from '../assets/constants';
 
 export default function Home() {
   const [videos, setVideos] = useState([]);
@@ -9,7 +10,7 @@ export default function Home() {
   useEffect(() => {
     async function fetchVideos() {
       try {
-        const response = await axios.get('https://backend-44vc.onrender.com/api/v1/videos/allvideos', {
+        const response = await axios.get(`${BASE_URL}/api/v1/videos/allvideos`, {
           headers: {
             'Access-Control-Allow-Origin': 'https://you-tube-frontend.vercel.app'
             // Add any other headers as needed

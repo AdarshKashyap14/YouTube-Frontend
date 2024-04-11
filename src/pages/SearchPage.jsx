@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams , Link } from 'react-router-dom';
+import { BASE_URL } from '../assets/constants';
 
 function SearchPage() {
   const { searchQuery } = useParams();
@@ -42,7 +43,7 @@ function SearchPage() {
     const fetchSearchResults = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get("/api/v1/videos/", {
+        const response = await axios.get(`${BASE_URL}/api/v1/videos/`, {
             params: { query: searchQuery },
           });
         setSearchResults(response.data.data);
