@@ -11,7 +11,7 @@ export default function Home() {
       try {
         const response = await axios.get('https://backend-44vc.onrender.com/api/v1/videos/allvideos', {
           headers: {
-            'Access-Control-Allow-Origin': 'https://you-tube-frontend.vercel.app'
+            'Access-Control-Allow-Origin': 'https://you-tube-frontend.vercel.app/'
             // Add any other headers as needed
           }
         });
