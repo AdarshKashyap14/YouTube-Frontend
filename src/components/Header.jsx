@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { RiVideoAddFill } from "react-icons/ri";
 import { useState } from "react";
-
+import { BASE_URL } from "../utils/constants";
 import { toggleTheme } from "../redux/theme/themeSlice";
 
 export default function Header() {
@@ -30,7 +30,7 @@ export default function Header() {
 
   const handleSignout = async () => {
     try {
-      const response = await axios.post("/api/v1/users/logout");
+      const response = await axios.post(`${BASE_URL}/api/v1/users/logout`);
 
       if (response.status !== 200) {
         console.log(response.message);

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Button, TextInput, Textarea, FileInput, Label } from "flowbite-react";
+import { BASE_URL } from '../utils/constants';
 
 export default function UpdateVideo() {
     const { videoId } = useParams();
@@ -20,7 +21,7 @@ export default function UpdateVideo() {
       formData.append("thumbnail", thumbnailFile);
       // Send the form data to the server
       try {
-        const res = await axios.patch(`/api/v1/videos/${videoId}`, formData, {
+        const res = await axios.patch(`${BASE_URL}/api/v1/videos/${videoId}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

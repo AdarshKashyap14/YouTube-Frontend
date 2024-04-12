@@ -7,6 +7,7 @@ import {
   updateSuccess,
   updateFailure,
 } from "../redux/user/userSlice";
+import { BASE_URL } from "../utils/constants";
 
 export default function DashProfile() {
   const { currentuser } = useSelector((state) => state.user);
@@ -35,7 +36,7 @@ export default function DashProfile() {
 
     try {
       const res = await axios.patch(
-        "/api/v1/users//update-user-account",
+        `${BASE_URL}/api/v1/users//update-user-account`,
         { fullname, email } // Send updated fullname and email
       );
 
@@ -69,7 +70,7 @@ export default function DashProfile() {
 
     try {
       const res = await axios.patch(
-        "/api/v1/users/update-user-avatar",
+        `${BASE_URL}/api/v1/users/update-user-avatar`,
         formData
       );
 

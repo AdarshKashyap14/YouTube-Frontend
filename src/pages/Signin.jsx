@@ -8,6 +8,7 @@ import {
   signInFailure,
 } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { BASE_URL } from "../utils/constants";
 
 export default function Signin() {
   const [username, setUsername] = useState("");
@@ -27,7 +28,7 @@ export default function Signin() {
     }
     try {
       dispatch(signInStart());
-      const response = await axios.post("/api/v1/users/login", {
+      const response = await axios.post(`${BASE_URL}/api/v1/users/login`, {
         username: username,
         password: password,
       });

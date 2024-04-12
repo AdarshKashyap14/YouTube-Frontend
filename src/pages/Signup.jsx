@@ -1,7 +1,7 @@
 import { Alert, Avatar, Button, TextInput } from "flowbite-react";
 import { useState } from "react";
 import axios from "axios";
-// import { navigate } from "react-router-dom";
+import { BASE_URL } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
@@ -41,7 +41,7 @@ export default function Signup() {
       formDataToSend.append("coverImage", coverImage);
 
       const response = await axios.post(
-        "/api/v1/users/register",
+        `${BASE_URL}/api/v1/users/register`,
         formDataToSend
       );
         console.log(response);

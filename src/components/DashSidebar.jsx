@@ -13,6 +13,7 @@ import { signoutSuccess } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { BASE_URL } from '../utils/constants';
 
 export default function DashSidebar() {
   const location = useLocation();
@@ -28,7 +29,7 @@ export default function DashSidebar() {
   }, [location.search]);
   const handleSignout = async () => {
     try {
-        const res = await axios.post("/api/v1/users/logout");
+        const res = await axios.post(`${BASE_URL}/api/v1/users/logout`);
       
       if (res.status!==200) {
         console.log(res.message);

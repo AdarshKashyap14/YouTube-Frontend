@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { Avatar, List } from 'flowbite-react';
+import { BASE_URL } from "../utils/constants";
 
 export default function  DashSubscribed() {
   const { currentuser } = useSelector((state) => state.user);
@@ -14,7 +15,7 @@ export default function  DashSubscribed() {
         setIsLoading(true);
         // Fetch subscribed channels from the server
         const response = await axios.get(
-          `/api/v1/subscriptions/c/${currentuser.data.user._id}`
+          `${BASE_URL}/api/v1/subscriptions/c/${currentuser.data.user._id}`
         );
         if (response.status === 200) {
           console.log("s",response.data);

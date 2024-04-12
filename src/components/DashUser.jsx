@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/constants";
 
 export default function DashUser() {
   const { currentuser } = useSelector((state) => state.user);
@@ -15,7 +16,7 @@ export default function DashUser() {
       try {
         setIsLoading(true);
         const response = await axios.get(
-          `/api/v1/users/channel/${currentuser.data.user.username}`
+          `${BASE_URL}/api/v1/users/channel/${currentuser.data.user.username}`
         );
 
         setUserDetails(response.data.data);

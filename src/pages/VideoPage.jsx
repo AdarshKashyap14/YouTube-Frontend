@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Button, TextInput } from "flowbite-react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { BASE_URL } from "../utils/constants";
 
 function VideoPage() {
   const { currentuser } = useSelector((state) => state.user);
@@ -21,7 +22,7 @@ function VideoPage() {
   const handleToggleLike = async () => {
     try {
       const responseLike = await axios.post(
-        `/api/v1/likes/toggle/v/${videoId}`
+        `${BASE_URL}/api/v1/likes/toggle/v/${videoId}`
       );
       if (responseLike.status === 200) {
         // Toggle the liked state
@@ -48,7 +49,7 @@ function VideoPage() {
   const handleToggleSubscription = async () => {
     try {
       const responseSubscription = await axios.post(
-        `/api/v1/subscriptions/c/${ownerDetails.owner._id}`
+        `${BASE_URL}/api/v1/subscriptions/c/${ownerDetails.owner._id}`
       );
       if (responseSubscription.status === 200) {
         // Toggle the subscription state
@@ -65,7 +66,7 @@ function VideoPage() {
   const handleAddComment = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`/api/v1/comments/${videoId}`, {
+      const response = await axios.post(`${BASE_URL}/api/v1/comments/${videoId}`, {
         content: commentContent,
       });
 
@@ -84,13 +85,13 @@ function VideoPage() {
     async function fetchData() {
       try {
         // Fetch video details
-        const videoResponse = await axios.get(`/api/v1/videos/${videoId}`);
+        const videoResponse = await axios.get(`${BASE_URL}/api/v1/videos/${videoId}`);
         if (videoResponse.data && videoResponse.data.success) {
           setVideo(videoResponse.data.data);
 
           // Fetch owner details
           const ownerResponse = await axios.get(
-            `/api/v1/subscriptions/u/${videoResponse.data.data.owner}`
+            `${BASE_URL}/api/v1/subscriptions/u/${videoResponse.data.data.owner}`
           );
           if (ownerResponse.data && ownerResponse.data.success) {
             setOwnerDetails(ownerResponse.data.data);
@@ -107,7 +108,7 @@ function VideoPage() {
           }
 
           // Fetch video likes
-          const likesResponse = await axios.get(`/api/v1/likes/${videoId}`);
+          const likesResponse = await axios.get(`${BASE_URL}/api/v1/likes/${videoId}`);
           await likesResponse.json;
 
           if (likesResponse.data && likesResponse.data.success) {
@@ -127,7 +128,7 @@ function VideoPage() {
 
           // Fetch video comments
           const commentsResponse = await axios.get(
-            `/api/v1/comments/${videoId}`
+            `${BASE_URL}/api/v1/comments/${videoId}`
           );
           if (commentsResponse.data && commentsResponse.data.success) {
             setComments(commentsResponse.data.data);

@@ -1,5 +1,6 @@
 import { Button, TextInput, Textarea, FileInput, Label } from "flowbite-react";
 import { useState } from "react";
+import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 
 export default function CreateVideo() {
@@ -21,7 +22,7 @@ export default function CreateVideo() {
     formData.append("thumbnail", thumbnailFile);
     // Send the form data to the server
     try {
-      const res = await axios.post("/api/v1/videos/", formData, {
+      const res = await axios.post(`${BASE_URL}/api/v1/videos/`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

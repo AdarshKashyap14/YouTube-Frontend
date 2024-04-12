@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "flowbite-react";
 import axios from "axios";
 import {  useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/constants";
 
 export default function DashVideos() {
   // console.log(currentuser.data.user.username);
@@ -13,7 +14,7 @@ export default function DashVideos() {
     try {
       setIsLoading(true);
       // Make an authenticated request to delete the video
-      const response = await axios.delete(`/api/v1/videos/${videoId}`);
+      const response = await axios.delete(`${BASE_URL}/api/v1/videos/${videoId}`);
       console.log(response.data);
    
       setRefresh(true);
@@ -29,7 +30,7 @@ export default function DashVideos() {
     try {
       setIsLoading(true);
    
-      const response = await axios.patch(`/api/v1/videos/toggle/publish/${videoId}`);
+      const response = await axios.patch(`${BASE_URL}/api/v1/videos/toggle/publish/${videoId}`);
       console.log(response.data);
       setRefresh(true);
       setIsLoading(false);
@@ -51,7 +52,7 @@ export default function DashVideos() {
       try {
         setIsLoading(true);
         // Make an authenticated request to fetch user's videos
-        const response = await axios.get("/api/v1/videos/allvideos/user");
+        const response = await axios.get(`${BASE_URL}/api/v1/videos/allvideos/user`);
 
         setUserVideos(response.data.data); 
         console.log(response.data);
