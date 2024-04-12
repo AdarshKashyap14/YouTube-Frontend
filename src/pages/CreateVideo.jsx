@@ -1,6 +1,7 @@
 import { Button, TextInput, Textarea, FileInput, Label } from "flowbite-react";
 import { useState } from "react";
-import { BASE_URL } from "../utils/constants";
+import { BASE_URL } from "../assets/constants";
+
 import axios from "axios";
 
 export default function CreateVideo() {

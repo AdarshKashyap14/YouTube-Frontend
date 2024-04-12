@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Button, TextInput } from "flowbite-react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { BASE_URL } from "../utils/constants";
+import { BASE_URL } from "..";
 
 function VideoPage() {
   const { currentuser } = useSelector((state) => state.user);

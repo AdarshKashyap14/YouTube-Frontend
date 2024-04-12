@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "../utils/constants";
+import { BASE_URL } from "../assets/constants";
+
 
 export default function DashUser() {
   const { currentuser } = useSelector((state) => state.user);

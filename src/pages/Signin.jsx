@@ -8,7 +8,8 @@ import {
   signInFailure,
 } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { BASE_URL } from "../utils/constants";
+import { BASE_URL } from "../assets/constants";
+
 
 export default function Signin() {
   const [username, setUsername] = useState("");

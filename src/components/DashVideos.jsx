@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Button } from "flowbite-react";
 import axios from "axios";
 import {  useNavigate } from "react-router-dom";
-import { BASE_URL } from "../utils/constants";
+import { BASE_URL } from "../assets/constants";
+
 
 export default function DashVideos() {
   // console.log(currentuser.data.user.username);

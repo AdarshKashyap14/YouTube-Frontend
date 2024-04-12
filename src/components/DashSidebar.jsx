@@ -13,7 +13,8 @@ import { signoutSuccess } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { BASE_URL } from '../utils/constants';
+import { BASE_URL } from "../assets/constants";
+
 
 export default function DashSidebar() {
   const location = useLocation();

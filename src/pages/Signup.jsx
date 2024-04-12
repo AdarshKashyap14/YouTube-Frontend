@@ -1,7 +1,8 @@
 import { Alert, Avatar, Button, TextInput } from "flowbite-react";
 import { useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "../utils/constants";
+import { BASE_URL } from "../assets/constants";
+
 import { useNavigate } from "react-router-dom";
 
 export default function Signup() {

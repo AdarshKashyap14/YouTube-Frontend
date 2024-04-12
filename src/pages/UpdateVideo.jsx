@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Button, TextInput, Textarea, FileInput, Label } from "flowbite-react";
-import { BASE_URL } from '../utils/constants';
+import { BASE_URL } from "../assets/constants";
+
 
 export default function UpdateVideo() {
     const { videoId } = useParams();

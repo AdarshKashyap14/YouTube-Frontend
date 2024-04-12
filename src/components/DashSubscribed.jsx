@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { Avatar, List } from 'flowbite-react';
-import { BASE_URL } from "../utils/constants";
+import { BASE_URL } from "../assets/constants";
+
 
 export default function  DashSubscribed() {
   const { currentuser } = useSelector((state) => state.user);

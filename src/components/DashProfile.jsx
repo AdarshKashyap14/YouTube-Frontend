@@ -7,7 +7,7 @@ import {
   updateSuccess,
   updateFailure,
 } from "../redux/user/userSlice";
-import { BASE_URL } from "../utils/constants";
+import { BASE_URL } from "../assets/constants";
 
 export default function DashProfile() {
   const { currentuser } = useSelector((state) => state.user);

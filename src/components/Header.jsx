@@ -8,7 +8,8 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { RiVideoAddFill } from "react-icons/ri";
 import { useState } from "react";
-import { BASE_URL } from "../utils/constants";
+import { BASE_URL } from "../assets/constants";
+
 import { toggleTheme } from "../redux/theme/themeSlice";
 
 export default function Header() {
